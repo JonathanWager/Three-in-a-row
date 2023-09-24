@@ -55,7 +55,7 @@ class ViewController: UIViewController {
             sender.setAttributedTitle(attributedTitle, for: .normal)
          */
         
-        if sender.attributedTitle(for: .normal) == nil {
+        if sender.attributedTitle(for: .normal) == nil || sender.attributedTitle(for: .normal) == NSAttributedString(string: ""){
             let fontSize: CGFloat = 50
             let font = UIFont.systemFont(ofSize: fontSize)
             let attributes: [NSAttributedString.Key: Any] = [
@@ -82,24 +82,24 @@ class ViewController: UIViewController {
 
         for i in stride(from: 0, to: 9, by: 3) {
             if let title1 = board[i], let title2 = board[i + 1], let title3 = board[i + 2],
-               title1 == title2 && title1 == title3 {
+               title1.length > 0, title1 == title2 && title1 == title3 {
                 return true
             }
         }
 
         for i in 0..<3 {
             if let title1 = board[i], let title2 = board[i + 3], let title3 = board[i + 6],
-               title1 == title2 && title1 == title3 {
+               title1.length > 0,title1 == title2 && title1 == title3 {
                 return true
             }
         }
 
         if let title0 = board[0], let title4 = board[4], let title8 = board[8],
-           title0 == title4 && title0 == title8 {
+           title0.length > 0,title0 == title4 && title0 == title8 {
             return true
         }
         if let title2 = board[2], let title4 = board[4], let title6 = board[6],
-           title2 == title4 && title2 == title6 {
+           title2.length > 0,title2 == title4 && title2 == title6 {
             return true
         }
 
@@ -114,7 +114,7 @@ class ViewController: UIViewController {
      */
     func isBoardFull() -> Bool {
         for button in btns {
-            if button.attributedTitle(for: .normal) == nil {
+            if button.attributedTitle(for: .normal) == nil || button.attributedTitle(for: .normal)?.length == 0 {
                 return false
             }
         }
@@ -137,8 +137,11 @@ class ViewController: UIViewController {
     
 
     @IBAction func reset(_ sender: UIButton) {
+        
         for button in btns {
-            button.setAttributedTitle(nil, for: .normal)
+            //button.setAttributedTitle(nil, for: .normal)
+            let emptyTitle = NSAttributedString(string: "", attributes: [:])
+            button.setAttributedTitle(emptyTitle, for: .normal)
             button.isEnabled = true
         }
         
