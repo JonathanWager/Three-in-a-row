@@ -54,7 +54,8 @@ class ViewController: UIViewController {
             let attributedTitle = NSAttributedString(string: "X", attributes: attributes)
             sender.setAttributedTitle(attributedTitle, for: .normal)
          */
-        if sender.title(for: .normal) == nil {
+        
+        if sender.attributedTitle(for: .normal) == nil {
             let fontSize: CGFloat = 50
             let font = UIFont.systemFont(ofSize: fontSize)
             let attributes: [NSAttributedString.Key: Any] = [
@@ -132,6 +133,19 @@ class ViewController: UIViewController {
             button.isEnabled = false
         }
     }
+    
+    
 
+    @IBAction func reset(_ sender: UIButton) {
+        for button in btns {
+            button.setAttributedTitle(nil, for: .normal)
+            button.isEnabled = true
+        }
+        
+        currentPlayer = .player1
+        boardCount = 0
+        status.text = "Player \(currentPlayer.turn)"
+    }
+    
 }
 
